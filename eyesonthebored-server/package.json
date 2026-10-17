@@ -1,0 +1,20 @@
+{
+  "name": "eyesonthebored-server",
+  "version": "1.0.50",
+  "module": "src/index.js",
+  "dependencies": {
+    "@better-auth/drizzle-adapter": "^1.7.10",
+    "@elysiajs/cors": "^1.4.2",
+    "better-auth": "^1.7.7",
+    "drizzle-orm": "^1.0.0-rc.4",
+    "elysia": "latest"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "bun run --watch src/index.ts"
+  },
+  "devDependencies": {
+    "@types/bun": "^1.4.3",
+    "drizzle-kit": "^1.0.0-rc.4"
+  }
+}

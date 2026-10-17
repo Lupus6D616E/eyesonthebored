@@ -1,0 +1,12 @@
+{
+    "name": "eyesonthebored",
+    "private": true,
+    "workspaces": ["eyesonthebored-client", "eyesonthebored-server"],
+    "scripts": {
+        "dev": "bun run --parallel --filter '*' dev",
+        "build": "bun run --filter '*' build"
+    },
+    "devDependencies": {
+        "@types/bun": "^1.4.3"
+    }
+}
