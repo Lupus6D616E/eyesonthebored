@@ -1,7 +1,7 @@
 import { sqliteTable, integer, text } from "drizzle-orm/sqlite-core";
 import { defineRelations, sql } from "drizzle-orm";
 export * from "./auth-schema"
-export const meets = sqliteTable("users", {
+export const meets = sqliteTable("host_code", {
   id: integer("id").primaryKey({ autoIncrement: true }),
   userId: text("user_id").notNull(),
   code: text("code").notNull().unique(),

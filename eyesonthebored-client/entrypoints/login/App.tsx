@@ -14,6 +14,7 @@ export default function App() {
             },
             onSuccess: (ctx) => {
                 setStatus("logged in successfully")
+                location.href = browser.runtime.getURL('/host.html')
             },
             onError: (ctx) => {
                 // display the error message

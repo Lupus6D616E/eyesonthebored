@@ -17,10 +17,13 @@
   "dependencies": {
     "@elysia/eden": "^1.4.10",
     "@elysiajs/eden": "^1.4.9",
+    "@tailwindcss/vite": "^4.3.3",
     "better-auth": "^1.7.9",
+    "daisyui": "^5.7.50",
     "eyesonthebored-server": "workspace:*",
     "react": "^19.2.4",
-    "react-dom": "^19.2.4"
+    "react-dom": "^19.2.4",
+    "tailwindcss": "^4.3.3"
   },
   "devDependencies": {
     "@types/react": "^19.2.14",
