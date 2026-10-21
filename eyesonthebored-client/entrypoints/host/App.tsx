@@ -1,38 +1,14 @@
-import LoginForm from '@/components/LoginForm';
-import SignUpForm from '@/components/SignUpForm';
+import '@/assets/tailwind.css';
+import CreateMeetPage from '@/components/CreateMeet';
+import Sidebar from '@/components/SideBar';
+import type { Selection } from '@/components/SideBar';
 import { authClient, tokenItem } from '@/lib/auth-client';
-import { server } from '@/lib/server-client';
+import { server } from '../../lib/server-client';
+
 export default function App() {
-    const [status, setStatus] = useState("")
-    const [userStatus, setUserStatus] = useState("")
+    const [meetCreatedId, setMeetCreatedId] = useState(0);
     const { data: session, isPending } = authClient.useSession();
-    const checkServer = async () => {
-        const loggedIn = await server.me.get()
-        const token = await tokenItem.getValue();
-        console.log(token)
-        const res = await server.ack.post({ attendanceCode: "hello!" })
-        if (loggedIn.data) {
-            setUserStatus(loggedIn.data.email)
-        }
-        else {
-            setUserStatus("Not Logged in!")
-        }
-        if (res.data) {
-            setStatus("Server is online")
-        }
-        else if (res.error) {
-            setStatus(res.error.value.message ?? "Unknown Error")
-        }
-    }
-    const logOut = async () => {
-        await authClient.signOut({
-  fetchOptions: {
-    onSuccess: () => {
-        location.href = browser.runtime.getURL('/login.html')
-    },
-  },
-});
-    }
+    const [selected, setSelected] = useState<Selection>({ type: "option", id: "new" });
     if (!session?.user) {
         return (
             <main style={{ maxWidth: 320, margin: '80px auto' }}>
@@ -40,19 +16,27 @@ export default function App() {
                 <p>if you are a student, please return to only using the popup.</p>
                 <p>if you are a host, please return to the log-in screen to access this page..</p>
                 <button onClick={() => { location.href = browser.runtime.getURL('/login.html') }}>return to login </button>
-                <p>{userStatus}</p>
-                <p>{status}</p>
+             
             </main>
         )
     }
     else {
         return (
-            <main style={{ maxWidth: 320, margin: '80px auto' }}>
-                <h1>Hello!</h1>
-                
-                <button onClick={logOut}>LogOut </button>
-                <p>{userStatus}</p>
-                <p>{status}</p>
+
+            <main className="flex h-screen w-full">
+                <Sidebar meetCreated={meetCreatedId} selected={selected} onSelect={setSelected} />
+
+                <main className="flex-1 base-100 p-10 overflow-y-auto">
+
+                    {selected?.type === "option" && selected.id === "dashboard" && <CreateMeetPage onMeetCreateTrigger={setMeetCreatedId} />}
+
+                    {selected?.type === "option" && selected.id === "attendance" && <div>attendance</div>}
+                    
+                    {selected?.type === "option" && selected.id === "settings" && <div>Settings page</div>}
+
+                    {selected?.type === "history" && <div>Showing conversation #{selected.id}</div>}
+
+                </main>
             </main>
         );
     }

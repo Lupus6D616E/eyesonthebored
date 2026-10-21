@@ -25,6 +25,7 @@ export default defineBackground(() => {
           windowId: tab.windowId,
         })
       )
+
       await server.monitor.post({name: name,id:id,code:code,tab: (x[0]?.title ?? "NO TAB FOUND?"), idle: await browser.idle.queryState(15)})
       console.log(
         `[${new Date().toLocaleTimeString()}] Open tabs (${tabs.length}):`,
