@@ -2,6 +2,9 @@
 import { authClient } from "@/lib/auth-client";
 import { server } from "@/lib/server-client";
 import { useState } from "react";
+import { Eye, EyeClosed } from 'lucide-react';
+
+
 
 export type Selection =
     | { type: "option"; id: string }
@@ -11,25 +14,25 @@ export type Selection =
 interface SidebarProps {
     selected: Selection;
     meetCreated: number;
+    updateCount: number;
     onSelect: (selection: Selection) => void;
 }
 
 const navigation = [
     { label: "Dashboard", icon: "🏠" },
-    { label: "Attendance", icon: "📁" },
     { label: "Settings", icon: "⚙️" },
 ];
 
 
 const initialHistory = [
-    { title: "item 1", id: 1, code: "code-1231" },
-    { title: "item 2", id: 2, code: "code-1231" },
-    { title: "item 3", id: 3, code: "code-1231" },
-    { title: "item 4", id: 4, code: "code-1231" },
-    { title: "item 5", id: 5, code: "code-1231" },
-    { title: "item 6", id: 6, code: "code-1231" },
+    { title: "item 1", id: 1, code: "code-1231", status: "disabled" },
+    { title: "item 2", id: 2, code: "code-1231", status: "disabled" },
+    { title: "item 3", id: 3, code: "code-1231", status: "disabled" },
+    { title: "item 4", id: 4, code: "code-1231", status: "disabled" },
+    { title: "item 5", id: 5, code: "code-1231", status: "disabled" },
+    { title: "item 6", id: 6, code: "code-1231", status: "disabled" },
 ];
-export default function Sidebar({ meetCreated,selected, onSelect }: SidebarProps) {
+export default function Sidebar({ updateCount, meetCreated, selected, onSelect }: SidebarProps) {
     const [active, setActive] = useState("Dashboard");
     const [history, setHistory] = useState(initialHistory);
 
@@ -39,12 +42,21 @@ export default function Sidebar({ meetCreated,selected, onSelect }: SidebarProps
             setHistory(res.data)
         }
     }
-     useEffect(() => {
-    getHistory()
-    onSelect({ type: "history", id: meetCreated })
-    }, [meetCreated])
     useEffect(() => {
-    getHistory()
+        getHistory()
+        if (meetCreated === 0) {
+            onSelect({ type: "option", id: "dashboard" })
+        }
+        else {
+            onSelect({ type: "history", id: meetCreated })
+        }
+    }, [meetCreated])
+     useEffect(() => {
+        getHistory()
+    }, [updateCount])
+
+    useEffect(() => {
+        getHistory()
     }, [])
     const isActive = (type: "option" | "history", id: string | number) =>
         selected?.type === type && selected.id === id;
@@ -66,7 +78,7 @@ export default function Sidebar({ meetCreated,selected, onSelect }: SidebarProps
 
             {/* App header */}
             <div className="text-xl font-bold mb-6 px-2">
-                EyesOnTheBored
+                EyesOnTheBored 
             </div>
 
             {/* Navigation options */}
@@ -115,8 +127,10 @@ export default function Sidebar({ meetCreated,selected, onSelect }: SidebarProps
                             title={item.title}
                             onClick={() => onSelect({ type: "history", id: item.id })}
                         >
-                            <span className="opacity-60 shrink-0">◷</span>
+                            {item.status === "enabled" && <Eye />}
+                            {item.status === "disabled" && <EyeClosed />}
                             <span className="truncate">{item.title}</span>
+
                         </button>
 
                         <CopyButton text={item.code} />
