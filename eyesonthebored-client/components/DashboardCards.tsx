@@ -423,13 +423,6 @@ export default function AttendanceDashboard({ metrics }: Props) {
                                             <tr key={person.userId}>
                                                 <td>
                                                     <div className="flex items-center gap-3">
-                                                        <div className="avatar placeholder">
-                                                            <div className="w-10 rounded-full bg-primary/10 text-primary">
-                                                                <span className="text-xs font-semibold">
-                                                                    {initials || "?"}
-                                                                </span>
-                                                            </div>
-                                                        </div>
                                                         <div>
                                                             <div className="font-semibold">
                                                                 {person.name}

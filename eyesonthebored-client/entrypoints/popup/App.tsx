@@ -36,7 +36,7 @@ function Popup() {
   const handleSubmit = async () => {
     const res = await server.ack.post({ attendanceCode: code })
     if (res.data) {
-      setStatus("ackd" + res.data.attendanceCode)
+      setStatus("Recognized Sent Data: " + res.data.attendanceCode)
     }
   }
   const tabLoggerStatus = async () => {
@@ -99,7 +99,7 @@ function Popup() {
           <div className="flex items-center justify-between">
             <div>
               <h1 className="text-xl font-bold tracking-tight">
-                Attendance Assistant
+                EyesOnTheBored
               </h1>
               <p className="mt-1 text-sm opacity-70">
                 Extension settings
@@ -162,6 +162,7 @@ function Popup() {
               </div>
 
               <button
+                disabled={(!name || !code || !id)}
                 onClick={tabLoggerToggle}
                 className="btn btn-primary btn-sm shrink-0"
               >
@@ -279,6 +280,7 @@ function Popup() {
 
             <p className="text-center text-xs leading-relaxed text-base-content/50">
               Click the eye icon above to view the privacy statement.
+              Click the blackboard if you are a host.
             </p>
           </div>
         </div>

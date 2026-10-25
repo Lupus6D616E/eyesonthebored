@@ -5,7 +5,7 @@ import { storage } from '#imports'; // or: import { storage } from 'wxt/utils/st
 export const hostnameSetting = storage.defineItem<string>('local:hostname', { fallback: 'meet.google.com' });
 
 export default function SettingsCard() {
-  const [one, setOne] = useState('default');
+  const [hostname, setHostname] = useState('default');
   const [saved, setSaved] = useState(false);
 
   // Prefill from storage on mount
@@ -14,13 +14,13 @@ export default function SettingsCard() {
       const [a] = await Promise.all([
         hostnameSetting.getValue(),
       ]);
-      setOne(a);
+      setHostname(a);
     })();
   }, []);
 
   const handleSave = async () => {
     await Promise.all([
-      hostnameSetting.setValue(one),
+      hostnameSetting.setValue(hostname),
     ]);
     setSaved(true);
     setTimeout(() => setSaved(false), 1500);
@@ -35,9 +35,9 @@ export default function SettingsCard() {
         <input
           type="text"
           className="input input-bordered w-full"
-          placeholder="Value one"
-          value={one}
-          onChange={(e) => setOne(e.target.value)}
+          placeholder="Hostname"
+          value={hostname}
+          onChange={(e) => setHostname(e.target.value)}
         />
         <div className="card-actions justify-end">
           <button
