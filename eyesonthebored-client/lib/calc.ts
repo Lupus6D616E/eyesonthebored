@@ -1,3 +1,4 @@
+import { hostnameSetting } from "@/components/SettingsCard";
 type LogLevel = "active" | "idle" | "locked";
 
 type LogEntry = {
@@ -42,14 +43,15 @@ type Options = {
 const DEFAULT_MAX_SAMPLE_MS = 40_000;
 const DEFAULT_SESSION_GAP_MS = 120_000;
 const DEFAULT_MIN_SESSION_MS = 0;
+const DEFAULT_HOSTNAME = await hostnameSetting.getValue()
 
 function isMeetUrl(rawUrl: string): boolean {
     try {
         const url = new URL(rawUrl);
-
+        console.log(DEFAULT_HOSTNAME)
         return (
             url.protocol === "https:" &&
-            url.hostname === "workspace.google.com"
+            url.hostname === DEFAULT_HOSTNAME
         );
     } catch {
         return false;

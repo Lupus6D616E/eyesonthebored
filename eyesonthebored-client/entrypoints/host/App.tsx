@@ -2,10 +2,10 @@ import '@/assets/tailwind.css';
 import CreateMeetPage from '@/components/CreateMeet';
 import Sidebar from '@/components/SideBar';
 import type { Selection } from '@/components/SideBar';
-import { authClient, tokenItem } from '@/lib/auth-client';
-import { server } from '../../lib/server-client';
+import { authClient } from '@/lib/auth-client';
 import MeetStats from '@/components/MeetStats';
 import { ThemeToggle } from '@/components/ThemeToggle';
+import SettingsCard from '@/components/SettingsCard';
 
 export default function App(){
     return(
@@ -52,10 +52,7 @@ function Host() {
                         </h1>
 
                         <ThemeToggle />
-
-                        <div className="mt-5 rounded-box bg-base-200 p-4">
-                            <p>This card automatically follows the selected theme.</p>
-                        </div>
+                        <SettingsCard />
                     </main>}
 
                     {selected?.type === "history" && <MeetStats updateSideBar={() => { updateSideBar() }} meetId={selected.id} />}

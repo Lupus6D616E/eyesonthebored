@@ -62,7 +62,6 @@ const tempMeetInfo: MeetInfo = {
     status: "disabled",
     meetStart: new Date(),
     meetEnd: new Date(Date.now() + 10_800_000)
-
 }
 
 export default function MeetStats({ meetId, updateSideBar }: MeetStatsProps) {
@@ -145,7 +144,7 @@ export default function MeetStats({ meetId, updateSideBar }: MeetStatsProps) {
             try {
                 await getLogs(meetId)
                 await getMeetInfo(meetId)
-                calculateMetrics()
+                setDashboardMetrics(undefined)
             } catch (error) {
                 console.error("Failed to fetch user:", error);
             }
@@ -196,6 +195,14 @@ export default function MeetStats({ meetId, updateSideBar }: MeetStatsProps) {
                             onClick={toggleMonitoring}
                         >
                             {monitoringEnabled ? "Disable monitoring" : "Enable monitoring"}
+                        </button>
+                        <button
+                            type="button"
+                            className="btn btn-outline"
+                            onClick={calculateMetrics}
+                            disabled={logs.length === 0}
+                        >
+                            calculateMetrics
                         </button>
                         <button
                             type="button"
